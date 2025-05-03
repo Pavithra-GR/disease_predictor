@@ -14,4 +14,4 @@ A machine learning web app that predicts the most probable disease based on symp
 - Flask
 - Scikit-learn
 - HTML + CSS
-- Pickle (for model serialization)
+- Jupyter Notebook
