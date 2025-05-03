@@ -7,7 +7,6 @@ A machine learning web app that predicts the most probable disease based on symp
 - Accepts symptoms via text input
 - Uses TF-IDF Vectorizer + KNN model for predictions
 - Built with Flask (Backend) + HTML/CSS (Frontend)
-- Clean and mobile-responsive UI
 
 ## 🧪 Tech Stack
 
