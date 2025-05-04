@@ -60,6 +60,10 @@ def home():
 def nearby_doctors():
     return render_template("Search-nearby-doctor.html")
 
+@app.route('/chatbot')
+def chatbot():
+    return render_template("chatbot.html")
+
 @app.route('/how-it-works')
 def how_it_works():
     return render_template("how-it-works.html")

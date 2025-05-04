@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chatbot - Disease Predictor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <!-- App Title -->
+    <div class="app-title">Disease Predictor</div>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/nearby-doctors">Search nearby doctors</a></li>
+            <li><a href="/chatbot">Chatbot</a></li>
+            <li><a href="/how-it-works">About Us</a></li>
+            <li><a href="/faq">FAQs</a></li>
+            <li><a href="/contact">Contact / Feedback</a></li>
+        </ul>
+    </div>
+
+    <div class="container" style="min-width: 0; width: 850px; text-align: left;">
+        <h1 style="text-align: center;">Symptom Checker Chatbot</h1>
+        <div id="chatbox" style="background-color: rgba(255, 255, 255, 0.9); padding: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); height: 300px; overflow-y: auto; margin-bottom: 20px;">
+            <div id="chatMessages">
+                <p style="margin-bottom: 10px;"><strong>Chatbot:</strong> Hello! I'm here to help you check your symptoms. Let's start with some questions.</p>
+            </div>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+            <button onclick="answerYes()" style="padding: 10px 20px; border-radius: 25px; background: #34a853; color: white; border: none; cursor: pointer;">Yes</button>
+            <button onclick="answerNo()" style="padding: 10px 20px; border-radius: 25px; background: #f44336; color: white; border: none; cursor: pointer;">No</button>
+        </div>
+        <form id="symptomForm" action="/predict" method="POST" style="display: none;">
+            <input type="hidden" name="symptoms" id="symptomsInput">
+        </form>
+    </div>
+
+    <script>
+        const questions = [
+            "Do you have a fever?",
+            "Do you have a cough?",
+            "Do you have fatigue or tiredness?",
+            "Do you have any pain or headache?",
+            "Do you have a sore throat?",
+            "Do you have a rash or itchy skin?",
+            "Do you have joint pain or stiffness?",
+            "Do you have difficulty breathing or wheezing?",
+            "Do you have stomach pain or bloating?",
+            "Do you have nausea or vomiting?",
+            "Do you have burning during urination?",
+            "Do you have frequent urination or thirst?",
+            "Do you have yellowing of skin or eyes?",
+            "Do you have swelling in your legs?",
+            "Do you have neck pain or numbness?",
+            "Do you have heartburn or chest pain?",
+            "Do you have sneezing or itchy eyes?",
+            "Do you have chills or sweating?"
+        ];
+        let currentQuestionIndex = 0;
+        let symptoms = [];
+
+        function addMessage(message) {
+            const chatMessages = document.getElementById("chatMessages");
+            const messageDiv = document.createElement("p");
+            messageDiv.style.marginBottom = "10px";
+            messageDiv.innerHTML = message;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll to bottom
+        }
+
+        function askQuestion() {
+            if (currentQuestionIndex < questions.length) {
+                addMessage(`<strong>Chatbot:</strong> ${questions[currentQuestionIndex]}`);
+            } else {
+                addMessage("<strong>Chatbot:</strong> Thank you! I'll now analyze your symptoms.");
+                const symptomsInput = document.getElementById("symptomsInput");
+                symptomsInput.value = symptoms.join(", ");
+                document.getElementById("symptomForm").submit();
+            }
+        }
+
+        function answerYes() {
+            if (currentQuestionIndex < questions.length) {
+                addMessage("<strong>You:</strong> Yes");
+                // Extract symptom from the question (e.g., "Do you have a fever?" -> "fever")
+                const match = questions[currentQuestionIndex].match(/Do you have (a|any )?(.+)\?$/);
+                if (match) {
+                    let symptom = match[2].trim();
+                    // Clean up the symptom by removing "or" phrases
+                    symptom = symptom.replace(" or tiredness", "")
+                                    .replace(" or headache", "")
+                                    .replace(" or stiffness", "")
+                                    .replace(" or itchy skin", "")
+                                    .replace(" or vomiting", "")
+                                    .replace(" or eyes", "")
+                                    .replace(" or bloating", "")
+                                    .replace(" or wheezing", "")
+                                    .replace(" or chest pain", "")
+                                    .replace(" or itchy eyes", "")
+                                    .replace(" or sweating", "");
+                    symptoms.push(symptom);
+                } else {
+                    // Fallback if regex fails
+                    addMessage("<strong>Chatbot:</strong> Sorry, I couldn't process that symptom. Let's move to the next question.");
+                }
+                currentQuestionIndex++;
+                askQuestion();
+            }
+        }
+
+        function answerNo() {
+            if (currentQuestionIndex < questions.length) {
+                addMessage("<strong>You:</strong> No");
+                currentQuestionIndex++;
+                askQuestion();
+            }
+        }
+
+        // Start the chatbot
+        askQuestion();
+    </script>
+</body>
+</html>
