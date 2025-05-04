@@ -1,0 +1,165 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Quicksand', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #c3cfe2, #f5f7fa);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    padding-top: 100px; /* Add padding to avoid overlap with title and navbar */
+    overflow-x: hidden;
+}
+
+/* App Title Styles */
+.app-title {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    color: #2e2e2e;
+    font-size: 1.5em;
+    font-weight: bold;
+    z-index: 1001; /* Ensure it stays above navbar */
+}
+
+/* Navigation Bar Styles */
+.navbar {
+    width: 100%;
+    background: #2e2e2e;
+    padding: 15px 20px;
+    position: fixed;
+    top: 50px; /* Position below the title */
+    left: 0;
+    z-index: 1000; /* Ensure it stays above other content */
+    display: flex; /* Use flexbox to align items */
+    justify-content: flex-end; /* Align items to the right */
+}
+
+.navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.navbar li {
+    margin: 0 20px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2em;
+    font-weight: 500;
+    padding: 10px 20px;
+    transition: background 0.3s ease;
+    border-radius: 5px;
+}
+
+.navbar a:hover {
+    background: #2575fc;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 40px 35px;
+    width: auto; /* Let it grow */
+    max-width: none; /* Remove fixed max-width */
+    min-width: 550px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+h1 {
+    color: #2e2e2e;
+    margin-bottom: 25px;
+    font-size: 1.9em;
+}
+
+textarea {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    resize: none;
+    font-size: 1em;
+    margin-bottom: 20px;
+    transition: 0.3s ease;
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+textarea:focus {
+    border-color: #4b9cdb;
+    outline: none;
+    background: #ffffff;
+    box-shadow: 0 0 10px rgba(75, 156, 219, 0.2);
+}
+
+button {
+    padding: 12px 28px;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(101, 112, 255, 0.4);
+}
+
+.result {
+    margin-top: 25px;
+    font-size: 1.3em;
+    color: #34c759;
+    font-weight: bold;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 30px 20px;
+    }
+
+    button {
+        font-size: 0.95em;
+    }
+
+    .app-title {
+        font-size: 1.2em;
+        top: 15px;
+        left: 15px;
+    }
+
+    .navbar {
+        top: 40px;
+        padding: 10px 15px;
+    }
+
+    .navbar li {
+        margin: 0 10px;
+    }
+
+    .navbar a {
+        font-size: 1em;
+        padding: 8px 15px;
+    }
+}

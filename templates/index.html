@@ -4,104 +4,20 @@
     <meta charset="UTF-8">
     <title>Disease Predictor</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Quicksand', sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #c3cfe2, #f5f7fa);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            overflow: hidden;
-        }
-
-        .container {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-radius: 20px;
-            padding: 40px 35px;
-            width: 100%;
-            max-width: 480px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.18);
-        }
-
-        h1 {
-            color: #2e2e2e;
-            margin-bottom: 25px;
-            font-size: 1.9em;
-        }
-
-        textarea {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid transparent;
-            border-radius: 12px;
-            resize: none;
-            font-size: 1em;
-            margin-bottom: 20px;
-            transition: 0.3s ease;
-            background: rgba(255, 255, 255, 0.7);
-            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
-        }
-
-        textarea:focus {
-            border-color: #4b9cdb;
-            outline: none;
-            background: #ffffff;
-            box-shadow: 0 0 10px rgba(75, 156, 219, 0.2);
-        }
-
-        button {
-            padding: 12px 28px;
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            color: white;
-            border: none;
-            border-radius: 30px;
-            font-size: 1em;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(101, 112, 255, 0.4);
-        }
-
-        .result {
-            margin-top: 25px;
-            font-size: 1.3em;
-            color: #34c759;
-            font-weight: bold;
-            animation: fadeIn 0.8s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 30px 20px;
-            }
-
-            button {
-                font-size: 0.95em;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="app-title">Disease Predictor</div>
+    <div class="navbar">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/nearby-doctors">Search nearby doctors</a></li>
+            <li><a href="/how-it-works">About Us</a></li>
+            <li><a href="/faq">FAQs</a></li>
+            <li><a href="/contact">Contact / Feedback</a></li>
+        </ul>
+    </div>
+
     <div class="container">
         <h1>Disease Predictor</h1>
         <form action="/predict" method="POST">
@@ -109,14 +25,63 @@
             <br>
             <button type="submit">Predict Disease</button>
         </form>
-        {% if prediction %}
+        <!-- {% if prediction %}
             <div class="result">🩺 Predicted Disease: {{ prediction }}</div>
-        {% endif %}
+        {% endif %} -->
+        {% if top_predictions %}
+    <div class="result">
+        🩺 <strong>Top Predicted Diseases:</strong><br><br>
+        <ul style="list-style: none; padding: 0;">
+            {% for disease, confidence in top_predictions %}
+                <li style="margin-bottom: 10px;">
+                    <strong>{{ disease }}</strong> – {{ (confidence * 100) | round(2) }}%
+                    <!-- <div style="background-color: #eee; height: 10px; border-radius: 5px; overflow: hidden; margin-top: 5px;">
+                        <div style="width: {{ confidence * 100 }}%; height: 100%; background: linear-gradient(to right, #6a11cb, #2575fc);"></div>
+                    </div> -->
+                    <div style="background-color: #eee; height: 10px; border-radius: 5px; overflow: hidden; margin-top: 5px;">
+                        <div style="width: {{ confidence * 100 }}%; height: 100%; background: linear-gradient(to right, #6a11cb, #2575fc);"></div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+{% if tips %}
+<!-- <button id="showTipsBtn" onclick="document.getElementById('precautionTips').style.display='block'; this.style.display='none';">
+    See Precaution Tips
+</button> -->
+<button id="showTipsBtn" onclick="showTips()">
+    See Precaution Tips
+</button>
+
+<div id="precautionTips" style="display: none; margin-top: 20px; text-align: left;">
+    <h3 style="color: #2e2e2e;">🛡️ Precaution Tips:</h3>
+    <ul style="margin-top: 10px;">
+        {% for tip in tips %}
+            <li>✅ {{ tip }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
     </div>
 </body>
+<script>
+     
+    function showTips() {
+        const tipsDiv = document.getElementById('precautionTips');
+        tipsDiv.style.display = 'block';
+        tipsDiv.style.opacity = 0;
+        let opacity = 0;
+        const fadeIn = setInterval(() => {
+            if (opacity >= 1) clearInterval(fadeIn);
+            tipsDiv.style.opacity = opacity;
+            opacity += 0.05;
+        }, 30);
+        document.getElementById('showTipsBtn').style.display = 'none';
+    }
+</script>
+
 </html>
-
-
 
 <!-- 
 <!DOCTYPE html>

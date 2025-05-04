@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Nearby Doctors</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-title">Disease Predictor</div>
+    <div class="navbar">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/nearby-doctors">Search nearby doctors</a></li>
+            <li><a href="/how-it-works">About Us</a></li>
+            <li><a href="/faq">FAQs</a></li>
+            <li><a href="/contact">Contact / Feedback</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <h1>Find Nearby Doctors</h1>
+
+        <!-- Display the location input and search button only if predictions are available -->
+        <div style="margin-top: 30px; text-align: left;">
+            <label for="locationInput" style="display:block; margin-bottom: 8px; font-weight: 600;">
+                🧭 Enter your location to find nearby doctors:
+            </label>
+            <input type="text" id="locationInput" placeholder="e.g. Chennai or your area" style="padding:10px; width:100%; border-radius:8px; border:1px solid #ccc;">
+            <br><br>
+            <button type="button" onclick="findDoctors()" style="padding: 10px 20px; border-radius: 25px; background: #34a853; color: white; border: none; cursor: pointer;">
+                Search Nearby Doctors
+            </button>
+        </div>
+        
+
+    </div>
+
+    <script>
+        // Function to handle location input and open Google Maps search
+        function findDoctors() {
+            const location = document.getElementById("locationInput").value.trim();
+            if (location) {
+                const query = encodeURIComponent("doctor in " + location);
+                window.open("https://www.google.com/maps/search/" + query, "_blank");
+            } else {
+                alert("Please enter your location to search for nearby doctors.");
+            }
+        }
+    </script>
+
+</body>
+</html>

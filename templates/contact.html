@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Us</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-title">Disease Predictor</div>
+    <div class="navbar">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/nearby-doctors">Search nearby doctors</a></li>
+            <li><a href="/how-it-works">About Us</a></li>
+            <li><a href="/faq">FAQs</a></li>
+            <li><a href="/contact">Contact / Feedback</a></li>
+        </ul>
+    </div>
+    <div class="container">
+        <h1>Contact Us</h1>
+        <form action="/submit-feedback" method="POST">
+            <textarea name="message" placeholder="Your feedback..." rows="5"></textarea>
+            <button type="submit">Send Feedback</button>
+        </form>
+        {% if feedback_submitted %}
+        <div class="result">
+            <p>Thank you for your feedback!</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
