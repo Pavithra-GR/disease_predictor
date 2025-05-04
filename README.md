@@ -36,4 +36,4 @@ A machine learning web app that predicts the most probable disease based on symp
 
 ### 🔹 5. About Section
 ![About Section](assets/AboutUsPage.png)
-)
+
